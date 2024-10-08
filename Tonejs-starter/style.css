@@ -1,0 +1,59 @@
+body,
+html {
+  margin: 0px auto;
+}
+
+.button {
+  position: absolute;
+  top: 6rem;
+  left: 1rem;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logo{
+  display: none;
+  height: 200px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.logoButton {
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.songButton {
+  position: absolute;
+  top: 3rem;
+  left: 1rem;
+  padding: 10px 20px;
+  background-color: #00AF00;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logoButton:hover {
+  background-color: #45a049;
+}
+
+.logoInput {
+  display: none;
+}
+
+.audio{
+  display: none;
+}

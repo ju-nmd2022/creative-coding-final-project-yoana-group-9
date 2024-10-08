@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tone JS Demo</title>
+    <script src="http://unpkg.com/tone" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"></script>
+    <script src="sketch.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <input type="file" class="audio" id="audioFile" accept="audio/*" />
+    <button class="songButton" id="songButton">Upload song</button>
+    <button class="button" id="startButton">▶</button>
+    <img class="logo" id="logoImage" src="default-logo.png" alt="Logo" />
+    <input type="file" id="logoInput" class="logoInput" accept="image/*">
+    <button class="logoButton" id="logoButton">Upload logo</button>
+  </body>
+</html>
