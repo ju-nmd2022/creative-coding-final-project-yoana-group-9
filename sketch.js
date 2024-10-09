@@ -9,7 +9,7 @@ let song;
 let isPlaying = false;
 let startButton = document.getElementById("startButton");
 let songInput = document.getElementById("audioFile");
-let songButton = document.getElementById("songButton");
+let songButton = document.getElementById("songButton"); 
 let meter, analyser;
 let beatMin = 10, beatDetected = false, beatCount = 0;
 let beatAmplitudes = [], particles = [];
@@ -26,6 +26,10 @@ let seed, day, currentSecond;
 let currentColor;
 //let lastColorChange = 0;
 //let colorChangeTime = 15000;
+
+//hide the buttons
+let hideButton = document.getElementById("hideButton");
+
 
 //open time
 //https://editor.p5js.org/yichun/sketches/OAdEpKtNc 
@@ -48,6 +52,13 @@ window.addEventListener("load", () => {
     songInput.addEventListener("change", chooseSong);
     startButton.addEventListener("click", startAudio);
     logoInput.addEventListener("change", chooseLogo);
+
+    hideButton.addEventListener("click", () => {  
+        logoButton.style.display = "none";
+        songButton.style.display = "none";
+        hideButton.style.display = "none"
+    });
+
     
     logoButton.addEventListener("click", () => {
         logoInput.click();
@@ -73,7 +84,9 @@ function chooseLogo(event) {
         loadImage(url, img => {
             logoImg = img;
             logoLoaded = true;
+            background(0);
         });
+        
     }
 }
 
