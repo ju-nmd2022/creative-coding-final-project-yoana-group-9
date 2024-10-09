@@ -22,7 +22,13 @@ let scale; // Size of each grid cell in the flow field
 let zOffset = 0; // Perlin noise "time" dimension?
 let seed, day, currentSecond;
 
+//particles
+let currentColor;
+//let lastColorChange = 0;
+//let colorChangeTime = 15000;
+
 //open time
+//https://editor.p5js.org/yichun/sketches/OAdEpKtNc 
 let pageOpenTime = Date.now();
 //current day
 let date = new Date(); // Sunday - Satyrday (0-6)
@@ -99,7 +105,7 @@ function startAudio() {
 seed = (pageOpenTime % 1000) / 8;
 
 function setup() {
-    background(0);
+    background(0, 30);
     createCanvas(innerWidth, innerHeight);
     console.log("day:", date.getDay());
     console.log("fade:", fadeInterval);
@@ -115,6 +121,9 @@ function setup() {
 
     // flow field array
     flowField = new Array(cols * rows);
+
+    //set particle color
+    currentColor = particleRandomColor();
 }
 
 function draw() {
@@ -143,6 +152,18 @@ function draw() {
 
     if (fadeActive) {
         applyFadeEffect();
+    }
+
+    // //particle change color
+    // if(millis() - lastColorChange > colorChangeTime) {
+    //     currentColor = particleRandomColor();
+    //     lastColorChange = millis();
+    // }
+
+    // Change color on every 10th beat
+    if (beatCount % 10 === 0) {
+        currentColor = particleRandomColor();
+        //lastColorChange = millis(); 
     }
 
     // Generate the flow field based on Perlin noise
@@ -217,28 +238,28 @@ class Particle {
         this.acceleration = createVector(0, 0);
         this.maxSpeed = 2;
         this.size = size; // depends on beat volume
-        this.color = this.getColorByCurrentSecond(); 
+        this.color = currentColor; 
     }
+    
+    // getColorByCurrentSecond() {
+    //     let currentSecond = new Date().getSeconds();
+    //     let hue = map(currentSecond, 0, 59, 0, 255);
+    //     let opacity = random(200, 255);
+    
+    //     //next - make only color change trough time
+    //     let red = color(hue, 0, 0, opacity);
+    //     let yellow = color(hue, hue, 0, opacity);
+    //     let white = color(hue, hue, hue, opacity);
+    //     let green = color(0, hue, 0, opacity);
+    //     let turquoise = color(0, hue, hue, opacity);
+    //     let purple = color(hue, 0, hue, opacity);
+    //     let blue = color(0, 0, hue, opacity);
+    
+    //     let colors = [red, yellow, white, green, turquoise, purple, blue];
+    //     let randomColor = floor(random(0, colors.length));
+    //     return colors[randomColor];
+    // }
 
-  getColorByCurrentSecond() {
-        let currentSecond = new Date().getSeconds();
-        let hue = map(currentSecond, 0, 59, 0, 255);
-        let opacity = random(200, 255);
-    
-        //next - make only color change trough time
-        let red = color(hue, 0, 0, opacity);
-        let yellow = color(hue, hue, 0, opacity);
-        let white = color(hue, hue, hue, opacity);
-        let green = color(0, hue, 0, opacity);
-        let turquoise = color(0, hue, hue, opacity);
-        let purple = color(hue, 0, hue, opacity);
-        let blue = color(0, 0, hue, opacity);
-    
-        let colors = [red, yellow, white, green, turquoise, purple, blue];
-        let randomColor = floor(random(0, colors.length));
-        return colors[randomColor];
-    }
-    
   //   getColorByCurrentSecond() {
   //     let currentSecond = new Date().getSeconds();
   //     let hue = map(currentSecond, 0, 59, 0, 255); 
@@ -285,6 +306,24 @@ class Particle {
         ellipse(this.position.x, this.position.y, this.size);
     }
 } 
+
+function particleRandomColor() {
+    let currentSecond = new Date().getSeconds();
+    let hue = map(currentSecond, 0, 59, 0, 255);
+    let opacity = random(200, 255);
+
+    let red = color(hue, 0, 0, opacity);
+    let yellow = color(hue, hue, 0, opacity);
+    let green = color(0, hue, 0, opacity);
+    let turquoise = color(0, hue, hue, opacity);
+    let purple = color(hue, 0, hue, opacity);
+    let blue = color(0, 0, hue, opacity);
+
+    let colors = [red, yellow, green, turquoise, purple, blue];
+    return colors[floor(random(0, colors.length))]; // Pick a random color
+    
+}
+
 
 // Detect beats and generate new particles
 function detectBeat(level) {
