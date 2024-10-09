@@ -1,7 +1,7 @@
 //logo
 let logoImg;
 let logoLoaded = false;
-let logoInput = document.getElementById('logoInput');
+let logoInput = document.getElementById("logoInput");
 let logoButton = document.getElementById("logoButton");
 
 //song
@@ -20,18 +20,16 @@ let flowField = [];
 let cols, rows;
 let scale; // Size of each grid cell in the flow field
 let zOffset = 0; // Perlin noise "time" dimension?
-let seed, day, currentSecond;
 
 //particles
 let currentColor;
-//let lastColorChange = 0;
-//let colorChangeTime = 15000;
 
 //hide the buttons
 let hideButton = document.getElementById("hideButton");
 
 
 //open time
+let seed, day, currentSecond;
 //https://editor.p5js.org/yichun/sketches/OAdEpKtNc 
 let pageOpenTime = Date.now();
 //current day
@@ -85,6 +83,7 @@ function chooseLogo(event) {
             logoImg = img;
             logoLoaded = true;
             background(0);
+            redraw();
         });
         
     }
@@ -167,16 +166,11 @@ function draw() {
         applyFadeEffect();
     }
 
-    // //particle change color
-    // if(millis() - lastColorChange > colorChangeTime) {
-    //     currentColor = particleRandomColor();
-    //     lastColorChange = millis();
-    // }
 
     // Change color on every 10th beat
     if (beatCount % 10 === 0) {
         currentColor = particleRandomColor();
-        //lastColorChange = millis(); 
+
     }
 
     // Generate the flow field based on Perlin noise
@@ -227,9 +221,7 @@ function draw() {
         let shakeX = random(-shakeMagnitude, shakeMagnitude);
         let shakeY = random(-shakeMagnitude, shakeMagnitude);
         translate(shakeX, shakeY);
-        // change color of particle
-
-    }
+      }
 
     function applyFadeEffect() {
         fadeAlpha += 0.01; // fade speed
@@ -254,32 +246,6 @@ class Particle {
         this.color = currentColor; 
     }
     
-    // getColorByCurrentSecond() {
-    //     let currentSecond = new Date().getSeconds();
-    //     let hue = map(currentSecond, 0, 59, 0, 255);
-    //     let opacity = random(200, 255);
-    
-    //     //next - make only color change trough time
-    //     let red = color(hue, 0, 0, opacity);
-    //     let yellow = color(hue, hue, 0, opacity);
-    //     let white = color(hue, hue, hue, opacity);
-    //     let green = color(0, hue, 0, opacity);
-    //     let turquoise = color(0, hue, hue, opacity);
-    //     let purple = color(hue, 0, hue, opacity);
-    //     let blue = color(0, 0, hue, opacity);
-    
-    //     let colors = [red, yellow, white, green, turquoise, purple, blue];
-    //     let randomColor = floor(random(0, colors.length));
-    //     return colors[randomColor];
-    // }
-
-  //   getColorByCurrentSecond() {
-  //     let currentSecond = new Date().getSeconds();
-  //     let hue = map(currentSecond, 0, 59, 0, 255); 
-  //     //later - maybe make the second values depend on the day
-  //     return color(hue, random(120, 200), random(200, 255));
-  // }
-
     follow(vectors) {
         let x = floor(this.position.x / scale);
         let y = floor(this.position.y / scale);
@@ -370,6 +336,7 @@ function generateParticles(level) {
         particleSize = random(4, 7); // Medium size for mid volume
     } else {
         particleSize = random(7, 12); // Large size for high volume
+        
     }
 
     // Create new particles on beat

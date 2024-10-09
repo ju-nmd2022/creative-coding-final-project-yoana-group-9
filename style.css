@@ -20,6 +20,11 @@ html {
   height: 200px;
   position: absolute;
   cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.beat {
+  transform: scale(1.2);
 }
 
 .logoButton {
