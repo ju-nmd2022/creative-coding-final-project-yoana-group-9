@@ -113,6 +113,7 @@ function startAudio() {
     isPlaying = !isPlaying;
 }
 
+
 //the real-time seconds the page was loaded / 8
 seed = (pageOpenTime % 1000) / 8;
 
@@ -211,7 +212,7 @@ function draw() {
     if (isPlaying) {
         fftValues = analyser.getValue();
         detectBeat(meter.getValue());
-        console.log("beatCount:", beatCount);
+        //console.log("beatCount:", beatCount);
     } else {
         background(0);
     }
@@ -234,6 +235,7 @@ function draw() {
     fill(0, fadeAlpha); 
     rect(0, 0, width, height);
 }
+
 }
 
 class Particle {
@@ -303,6 +305,22 @@ function particleRandomColor() {
     
 }
 
+function changeGrid() {
+    let newScaleIncrease = random(10, 30);  
+    scale += floor(newScaleIncrease);  // sclate the current cells'size
+
+    scale = constrain(scale, 20, 100);  // min and max limits for scale (to not get too big)
+
+    // recalculate the grid
+    cols = floor(width / scale);
+    rows = floor(height / scale);
+
+    flowField = new Array(cols * rows);
+
+    console.log("new cellSize:", scale);
+
+    background(random(0, 100));
+}
 
 // Detect beats and generate new particles
 function detectBeat(level) {
@@ -315,6 +333,11 @@ function detectBeat(level) {
         beatCount++;
         generateParticles(level);
         beatDetected = true;
+
+        //change grid
+    if (beatCount % 30 === 0) {
+        changeGrid();
+    }
 
         // shaking effect
         isShaking = true;
@@ -345,5 +368,4 @@ function generateParticles(level) {
     }
 }
 
-// add microphone input
 // add device spund input
