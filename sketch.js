@@ -124,7 +124,7 @@ function setup() {
     console.log("fade:", fadeInterval);
 
     // the cells' size
-    scale = floor(10 + (seed / 3));
+    scale = floor(10 + (seed / 3)); // 30 = 10 + pageOpenTime *1000 / 8/ 240 = 10 + x * 1000/ 230 = x * 1000/ 0,23 = x
 
     //grid
     cols = floor(width / scale);
