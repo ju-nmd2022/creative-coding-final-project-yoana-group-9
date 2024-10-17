@@ -289,16 +289,16 @@ class Particle {
 } 
 
 function particleRandomColor() {
-    let currentSecond = new Date().getSeconds();
-    let hue = map(currentSecond, 0, 59, 0, 255);
+    //let currentSecond = new Date().getSeconds();
+    //let hue = map(currentSecond, 0, 59, 0, 255);
     let opacity = random(200, 255);
 
-    let red = color(hue, 0, 0, opacity);
-    let yellow = color(hue, hue, 0, opacity);
-    let green = color(0, hue, 0, opacity);
-    let turquoise = color(0, hue, hue, opacity);
-    let purple = color(hue, 0, hue, opacity);
-    let blue = color(0, 0, hue, opacity);
+    let red = color(random(50, 255), 0, 0, opacity);
+    let yellow = color(random(50, 255), random(50, 255), 0, opacity);
+    let green = color(0, random(50, 255), 0, opacity);
+    let turquoise = color(0, random(50, 255), random(50, 255), opacity);
+    let purple = color(random(50, 255), 0, random(50, 255), opacity);
+    let blue = color(0, 0, random(50, 255), opacity);
 
     let colors = [red, yellow, green, turquoise, purple, blue];
     return colors[floor(random(0, colors.length))]; // Pick a random color
