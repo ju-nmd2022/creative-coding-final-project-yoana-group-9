@@ -24,7 +24,7 @@ let zOffset = 0; // Perlin noise "time" dimension?
 //particles
 let currentColor;
 
-//hide the buttons
+//hide the buttons (for better visualisation mode)
 let hideButton = document.getElementById("hideButton");
 
 
@@ -74,7 +74,7 @@ window.addEventListener("load", () => {
      });
 });
 
-
+// upload logo
 function chooseLogo(event) {
     let file = event.target.files[0];
     if (file) {
@@ -89,6 +89,7 @@ function chooseLogo(event) {
     }
 }
 
+//upload song
 function chooseSong() {
     let file = this.files[0];
     if (file) {
@@ -114,7 +115,7 @@ function startAudio() {
 }
 
 
-//the real-time seconds the page was loaded / 8
+//the real-time seconds the page was loaded / 8 
 seed = (pageOpenTime % 1000) / 8;
 
 function setup() {
@@ -124,12 +125,13 @@ function setup() {
     console.log("fade:", fadeInterval);
 
     // the cells' size
-    scale = floor(10 + (seed / 3)); // 30 = 10 + pageOpenTime *1000 / 8/ 240 = 10 + x * 1000/ 230 = x * 1000/ 0,23 = x
+    scale = floor(10 + (seed / 3)); 
 
     //grid
     cols = floor(width / scale);
     rows = floor(height / scale);
 
+    //see the difference in cell size on page load
     console.log("cellSize:", scale);
 
     // flow field array
@@ -147,7 +149,7 @@ function draw() {
         image(logoImg, width / 2 - logoWidth / 2, height / 2 - logoHeight / 2, logoWidth, logoHeight);
     }
 
-    // canvas shaking
+    // canvas shaking (translate the canvas on high beat detection for an extra visual effect)
     if (isShaking) {
         applyShakeEffect();
         shakeDuration--;
@@ -156,7 +158,7 @@ function draw() {
         }
     }
 
-    // Fade effect
+    // Fade effect (delete the drawing gradualy to cleare the canvas and escape to cluttered image)
     // https://editor.p5js.org/enickles/sketches/MBgdwrdPB 
     if (millis() - lastFadeTime > fadeInterval) {
         fadeActive = true;
@@ -171,7 +173,6 @@ function draw() {
     // Change color on every 10th beat
     if (beatCount % 10 === 0) {
         currentColor = particleRandomColor();
-
     }
 
     // Generate the flow field based on Perlin noise
@@ -244,7 +245,7 @@ class Particle {
         this.velocity = createVector(0, 0);
         this.acceleration = createVector(0, 0);
         this.maxSpeed = 2;
-        this.size = size; // depends on beat volume
+        this.size = size; //depends on beat volume
         this.color = currentColor; 
     }
     
@@ -289,8 +290,6 @@ class Particle {
 } 
 
 function particleRandomColor() {
-    //let currentSecond = new Date().getSeconds();
-    //let hue = map(currentSecond, 0, 59, 0, 255);
     let opacity = random(200, 255);
 
     let red = color(random(50, 255), 0, 0, opacity);
@@ -305,6 +304,7 @@ function particleRandomColor() {
     
 }
 
+//update the grid at some point to achive variaty while the song is playing
 function changeGrid() {
     let newScaleIncrease = random(10, 30);  
     scale += floor(newScaleIncrease);  // sclate the current cells'size
@@ -367,5 +367,3 @@ function generateParticles(level) {
         particles.push(new Particle(random(width), random(height), particleSize));
     }
 }
-
-// add device spund input
